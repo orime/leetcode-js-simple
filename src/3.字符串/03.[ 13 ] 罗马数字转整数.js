@@ -20,8 +20,6 @@ X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。 
 C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
 给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。
 
- 
-
 示例 1:
 
 输入: "III"
@@ -53,15 +51,114 @@ C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
  * @param {string} s
  * @return {number}
  */
-var romanToInt = function(s) {
+var romanToInt = function (s) {
   const map = {
-    
+
   }
+  let count = 0
+  for (let i = 0; i < s.length; i++) {
+    const char = s[i]
+    switch (char) {
+      case 'I':
+        if (s[i + 1] === 'V') {
+          // * 下一个是 V
+          count += 4
+          i++
+        } else if (s[i + 1] === 'X') {
+          count += 9
+          i++
+        } else {
+          count += 1
+        }
+        break;
+
+      case 'X':
+        if (s[i + 1] === 'L') {
+          count += 40
+          i++
+        } else if (s[i + 1] === 'C') {
+          count += 90
+          i++
+        } else {
+          count += 10
+        }
+        break;
+
+      case 'C':
+        if (s[i + 1] === 'D') {
+          count += 400
+          i++
+        } else if (s[i + 1] === 'M') {
+          count += 900
+          i++
+        } else {
+          count += 100
+        }
+        break;
+      case 'V':
+        count += 5
+        break
+      case 'L':
+        count += 50
+        break
+      case 'D':
+        count += 500
+        break
+      case 'M':
+        count += 1000
+        break
+
+      default:
+        break;
+    }
+  }
+  return count
+};
+
+// * 解法二：用map替代switch，但是性能降低
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var romanToInt1 = function (s) {
+  const map = {
+    I: 1,
+    IV: 4,
+    V: 5,
+    IX: 9,
+    X: 10,
+    XL: 50,
+    L: 50,
+    XC: 90,
+    C: 100,
+    CD: 500,
+    D: 500,
+    CM: 900,
+    M: 1000,
+  }
+  let count = 0
+  for (let i = 0; i < s.length; i++) {
+    if(map[s.substr(i, 2)]){
+      count += map[s.substr(i, 2)]
+      i++
+    } else {
+      count += map[s.substr(i, 1)]
+    }
+  }
+  return count
 };
 
 // 测试用例
-let test = ''
+let test = "LVIII"
+let test1 = "III"
+
+console.time('执行用时');
+console.log(romanToInt1(test));
+console.log(romanToInt1(test1));
+console.timeEnd('执行用时');
 
 console.time('执行用时');
 console.log(romanToInt(test));
+console.log(romanToInt(test1));
 console.timeEnd('执行用时');
