@@ -33,24 +33,40 @@ nums2 = [2,3,6], n = 3
  * @return {void} Do not return anything, modify nums1 in-place instead.
  */
 const merge = (nums1, m, nums2, n) => {
-  let i = nums1.length - 1
-  m--
-  n--
+  let i = nums1.length - 1;
+  m--;
+  n--;
   while (n >= 0) {
     if (nums1[m] > nums2[n]) {
-      nums1[i--] = nums1[m--]
+      nums1[i--] = nums1[m--];
     } else {
-      nums1[i--] = nums2[n--]
+      nums1[i--] = nums2[n--];
     }
   }
-  return nums1
-}
+  return nums1;
+};
 
+// * 解法二：我直接排序它不香吗
+
+/**
+ * @param {number[]} nums1
+ * @param {number} m
+ * @param {number[]} nums2
+ * @param {number} n
+ * @return {void} Do not return anything, modify nums1 in-place instead.
+ */
+const merge1 = (nums1, m, nums2, n) => {
+  nums1.splice(m)
+  nums1.push(...nums2)
+  return nums1.sort()
+};
 
 // 测试用例
-let nums1 = [1, 2, 3, 0, 0, 0], m = 3,
-  nums2 = [2, 5, 6], n = 3
+let nums1 = [1, 2, 3, 0, 0, 0],
+  m = 3,
+  nums2 = [2, 5, 6],
+  n = 3;
 
-console.time('执行用时');
-console.log(merge(nums1, m, nums2, n));
-console.timeEnd('执行用时');
+console.time("执行用时");
+console.log(merge1(nums1, m, nums2, n));
+console.timeEnd("执行用时");
