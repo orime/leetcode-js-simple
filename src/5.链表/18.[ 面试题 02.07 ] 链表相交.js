@@ -5,7 +5,16 @@
 
 // * 思路：
 
-
+var getIntersectionNode = (headA, headB) => {
+  if (!headA || !headB) return null
+  let curA = headA,
+    curB = headB
+  while (curA !== curB) {
+    curA = curA ? curA.next : headB
+    curB = curB ? curB.next : headA
+  }
+  return curA
+}
 
 // 测试用例
 let test = ''

@@ -17,23 +17,19 @@
 
 // * 思路：栈
 
-/**
- * @param {ListNode} head
- * @return {boolean}
- */
 var isPalindrome = function (head) {
-  const stack = []
+  if (!head) return true
+  const queue = []
   let cur = head
   while (cur) {
-    if (stack[stack.length - 1] === cur.val) {
-      stack.pop()
-    } else {
-      stack.push(cur.val)
-    }
+    queue.push(cur.val)
     cur = cur.next
   }
-  return !stack.length
-}
+  while (queue.length >= 1) {
+    if (queue.shift() !== queue.pop()) return false
+  }
+  return true
+};
 
 // 测试用例
 let test = ""
