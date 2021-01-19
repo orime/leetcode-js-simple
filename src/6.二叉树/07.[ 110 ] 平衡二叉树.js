@@ -44,7 +44,7 @@ var isBalanced = function (root) {
   )
 }
 
-// * 思路二：自底向上备忘录剪纸计算
+// * 思路二：自底向上备忘录剪枝计算
 
 /**
  * @param {TreeNode} root
@@ -61,7 +61,9 @@ var isBalanced1 = function (root) {
   )
   function calcDiff(node) {
     if (!node) return 0
+    console.log(map, '判断前')
     if (map.get(node)) return map.get(node)
+    console.log(map, '判断后')
     const leftDep = calcDiff(node.left)
     const rightDep = calcDiff(node.right)
     const dep = Math.max(leftDep, rightDep) + 1
@@ -69,6 +71,30 @@ var isBalanced1 = function (root) {
     return dep
   }
 }
+
+// * 思路三：是我暂时还看不懂的自底向上解法
+
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isBalanced2 = function (root) {
+  const ret = isNodeBalanced(root);
+  if (ret >= 0) return true; // * 从最底层子树开始计算，最后返回的要么是 -1 要么是最大层数
+  return false;
+};
+function isNodeBalanced(node) {
+  if (!node) return 0;
+  const left = isNodeBalanced(node.left);
+  const right = isNodeBalanced(node.right);
+  if (left < 0 || right < 0) return -1; //短路机制，有一个子树不满足条件就直接返回
+  if (Math.abs(left - right) > 1) { //子树高度差多于1，就返回-1
+    return -1;
+  } else {
+    return Math.max(left, right) + 1;
+  }
+}
+
 
 // 测试用例
 let test = ""

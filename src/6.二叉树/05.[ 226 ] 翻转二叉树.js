@@ -47,7 +47,7 @@ var invertTree = function (root) {
  */
 var invertTree1 = function (root) {
   if (!root) return null
-  ;[root.left, root.right] = [root.right, root.left]
+    ;[root.left, root.right] = [root.right, root.left]
   invertTree(root.left)
   invertTree(root.right)
   return root
@@ -58,14 +58,14 @@ var invertTree1 = function (root) {
 /**
  * @param {TreeNode} root
  * @return {TreeNode}
- * * 和镜像一个逻辑--->递归出栈之前交换好（交换好底层子树，逐级回溯）
+ * * 将深层递归转化为单层交换
  */
 var invertTree2 = function (root) {
   if (!root) return null
   let queue = [root]
   while (queue.length) {
     const stack = []
-    ;[root.left, root.right] = [root.right, root.left]
+      ;[root.left, root.right] = [root.right, root.left]
     root.left && stack.push(root.left)
     root.right && stack.push(root.right)
     queue = stack
