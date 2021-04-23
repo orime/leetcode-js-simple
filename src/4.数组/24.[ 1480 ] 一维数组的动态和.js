@@ -44,6 +44,7 @@ var runningSum = function (nums) {
  * @return {number[]}
  */
 var runningSum1 = function (nums) {
+  if (!nums.length) return []
   const res = []
   nums.reduce((pre, cur) => {
     res.push(pre + cur)
